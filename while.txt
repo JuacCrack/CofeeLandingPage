@@ -1,0 +1,13 @@
+      <?php 
+          $items = mysqli_query($conexion, $productos);
+          while ($row = mysqli_fetch_assoc ($items)) {
+      ?>
+        
+        <div class="menu-item">
+          <img src="frontend/img/2.jpg" alt="Café" />
+          <h3><?php echo $row ["nombre"]; ?></h3>
+          <p><?php echo $row ["descripcion"]; ?></p>
+          <button id="price"><?php echo $row ["precio"]; ?>$</button>
+        </div>
+
+      <?php }?>
