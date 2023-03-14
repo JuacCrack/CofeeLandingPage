@@ -1,6 +1,5 @@
 <?php
 
-$conexion=mysqli_connect("bwefysr6dcffve1scrwm-mysql.services.clever-cloud.com","uszjl41ji4inbcc2","RBbqlirlw9xEpFGTCqNc","bwefysr6dcffve1scrwm")or die(
-    "ERROR DE CONEXION");
-    
+$conexion = mysqli_connect("containers-us-west-45.railway.app", "root", "xlHxGLoU1ZSl5vzATMjZ", "railway", 7966) or die("ERROR DE CONEXION");
+
 ?>

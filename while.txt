@@ -1,13 +1,33 @@
-      <?php 
-          $items = mysqli_query($conexion, $productos);
-          while ($row = mysqli_fetch_assoc ($items)) {
-      ?>
-        
-        <div class="menu-item">
-          <img src="frontend/img/2.jpg" alt="Café" />
-          <h3><?php echo $row ["nombre"]; ?></h3>
-          <p><?php echo $row ["descripcion"]; ?></p>
-          <button id="price"><?php echo $row ["precio"]; ?>$</button>
-        </div>
+ <?php
+          include ("backend/php/db.php");
+          $categorias = "SELECT * FROM categorias";
+         ?>
 
-      <?php }?>
+          <?php 
+          $items = mysqli_query($conexion, $categorias);
+          while ($row = mysqli_fetch_assoc ($items)) {
+          ?>
+
+          <div class="menu-item" id="<?php echo $row ["id"]; ?>">
+
+            <a href="#popup-<?php echo $row['id']; ?>" id="afull"><?php echo $row ["nombre"]; ?></a>
+
+          </div>
+
+          <?php 
+          $productos = "SELECT * FROM productos WHERE id_categoria = {$row['id']}";
+          $productos_items = mysqli_query($conexion, $productos);
+          ?>
+
+          <div class="popup-container" id="#popup-<?php echo $row['id']; ?>">
+
+            <div class="popup">
+
+                <a href="#" class="cerrar">❌</a>
+                <h1>Hello World!</h1>
+
+            </div>
+
+          </div>
+
+        <?php } ?>

@@ -1,7 +1,6 @@
 //CARROUSEL IMG HEADER
 const images = [
     'frontend/img/bg1.png',
-    'frontend/img/bg2.png',
     'frontend/img/bg3.png',
   ];
   let currentImage = 0;
