@@ -1,108 +1,173 @@
-<?php        
-  error_reporting(0); 
-  include ("backend/php/db.php");
-  $categorias = "SELECT * FROM categorias";
+<?php 
+
+include ('backend/php/db.php');
+
 ?>
+
+<script>
+
+window.addEventListener('hashchange', function() {
+  var popupContainer = document.querySelector('.popup-container');
+  var isTarget = location.hash.startsWith('#productos_categoria_');
+
+  document.body.style.overflow = isTarget ? 'hidden' : 'auto';
+});
+
+</script>
+
 <!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coffee Break</title>
-    <link rel="stylesheet" href="frontend/styles/style.css" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="frontend/styles/style.css">
+  <title>CofeeBreak</title>
+</head>
+<body class="aca">
 
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="#menu">Menú</a></li>
-          <li><a href="#nosotros"> Nosotros</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-      </nav>
-      <h1>Coffee Break</h1>
-      <p>La mejor cafetería de la ciudad.</p>
-    </header>
+  <div class="head" id="header">
 
-    <main>
+    <div class="box">
 
-      <h2 id="menu">Menú</h2>
+      <div class="btnes">
+
+        <a href="index.php" class="btn">Home</a>
+
+        <a href="#menu" class="btn">Menú</a>
+
+        <a href="#nosotros" class="btn">Nosotros</a>
+
+      </div>
+
+      <h1>CofeeBreak</h1>
+
+    </div>
+
+  </div>
+
+  <div class="body">
+
+    <div class="menu" id="menu">
+
+      <h2>MENÚ</h2>
 
       <div class="menu-container">
+
+        <div class="scroll-menu">
+
+          <?php $categorias = "SELECT * FROM categorias"; $items = mysqli_query($conexion, $categorias);while ($rowc = mysqli_fetch_assoc ($items)) { ?>
+
+          <div class="menu-item" id="categoria_<?php echo $rowc ["id"]; ?>" style="background-image:url(../backend/php/img_comprimida/categorias/<?php echo $rowc ["id"]; ?>bg.jpg);">
+
+            <a href="#productos_categoria_<?php echo $rowc ["id"]; ?>" class="titulo"><h2 class="h2"><?php echo $rowc ["nombre"]; ?></h2></a>
+
+          </div>
+
+          <div class="popup-container" id="productos_categoria_<?php echo $rowc ["id"]; ?>">
+
+            <div class="popup">
+
+             <div class="cerrar"><a href="#menu">X</a></div>
+
+             <div class="scroll-product">
+
+             <?php $productos = "SELECT * FROM productos WHERE id_categoria = {$rowc['id']}"; $productos_items = mysqli_query($conexion, $productos); while ($rowp = mysqli_fetch_assoc($productos_items)) { ?>
+
+              <div class="product-item" id="producto_<?php echo $rowp ["id"]; ?>">
+
+                  <div class="product-image">
+
+                    <div class="image-product" style="background-image:url(../backend/php/img_comprimida/productos/<?php echo $rowp ["id"]; ?>bg.jpg);"></div>
+
+                  </div>
+
+                  <div class="product-details">
+
+                    <h2><?php echo $rowp ["nombre"]; ?></h2>
+
+                    <div class="product-description">
+
+                      <p><?php echo $rowp ["descripcion"]; ?></p>
+
+                    </div>
+
+                    <div class="product-price">
+
+                      <span>$<?php echo $rowp ["precio"]; ?></span>
+
+                    </div>
+
+                  </div>
+
+              </div>
+
+              <?php } ?>
+
+             </div> 
+
+            </div>
+        
+          </div>
+
+          <?php } ?>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="nosotros" id="nosotros">
+
+      <div class="informacion">
+
+       <h3 class="h3">Sobre Nosotros</h3>
       
-          <?php 
-            $items = mysqli_query($conexion, $categorias);
-            while ($rowc = mysqli_fetch_assoc ($items)) {
-            // Obtener la imagen en formato base64
-            $imagen_base64c = base64_encode($rowc['image_categoria']);
-            // Generar el código de fondo CSS con la imagen base64
-            $bg_bdc = "background-image: url('data:image/jpeg;base64, " . $imagen_base64c . "');";
-          ?>
+        <div class="scroll-info">
 
-       <div class="menu-item" id="<?php echo $rowc ["id"]; ?>" style="<?php echo $bg_bdc; ?>">
-        <a id="afull" href="#popup-<?php echo $rowc ["id"]; ?>"><?php echo $rowc ["nombre"]; ?></a>
-       </div>
+          <p>La cafetería es conocida por su delicioso café y su amplia variedad de bebidas calientes y frías, así como por sus bocadillos y pasteles recién horneados. El ambiente es relajado y acogedor, con una decoración moderna y sencilla que invita a quedarse un rato.
 
-        <div class="popup-container" id="popup-<?php echo $rowc["id"]; ?>">
-          <div class="popup">
+          A lo largo de los años, Coffee Break ha ido evolucionando para adaptarse a las necesidades de sus clientes. Ahora también ofrecen opciones vegetarianas y veganas, y han ampliado su horario para poder atender a los noctámbulos.
 
-            <a class="cerrar" href="#menu">❌</a>
+          Pero lo que hace que Coffee Break sea realmente especial es su equipo. Los empleados son amables y serviciales, y siempre están dispuestos a ayudar a los clientes a encontrar la bebida o el bocadillo perfecto para su gusto. Son parte de la comunidad y se enorgullecen de formar parte de la historia de la ciudad.
 
-            <?php
-              $productos = "SELECT * FROM productos WHERE id_categoria = {$rowc['id']}";
-              $productos_items = mysqli_query($conexion, $productos);
-              while ($rowp = mysqli_fetch_assoc($productos_items)) {
-              // Obtener la imagen en formato base64
-              $imagen_base64p = base64_encode($rowp['imagen']);
-              // Generar el código de fondo CSS con la imagen base64
-              $bg_bdp = "background-image: url('data:image/jpeg;base64, " . $imagen_base64p . "');";
-            ?>
+          Si buscas un lugar tranquilo para relajarte y disfrutar de una buena taza de café, no busques más que Coffee Break. Es un lugar que te hará sentir como en casa.</p>
 
-              <h1><?php echo $rowp["nombre"]; ?></h1>
-              <p><?php echo $rowp["descripcion"]; ?></p>
-              <img src="data:image/jpeg;base64, <?php echo $imagen_base64p; ?>" alt="<?php echo $rowp["nombre"]; ?>">
+        </div>
 
-            <?php } ?>
+      </div>
 
+      <div class="staff">
+
+      <h3 class="h3">Conoce a nuestro personal</h3>
+
+        <div class="carousel">
+
+          <div class="slide">
+            <div class="staff-member">
+
+              <div class="staff-img" style="background-image: url();"></div>
+
+              <div class="info">
+                <h3>Nombre del Trabajador</h3>
+                <h4>Apodo del Trabajador</h4>
+                <p>Pequeña descripción del trabajador.</p>
+              </div>
+              
+            </div>
           </div>
 
         </div>
 
-       <?php } ?>
-
       </div>
-            
-            <section class="about-us" id="nosotros">
-              <h2 id="h2">Sobre Nosotros</h2>
-              <p>Coffee Break es una acogedora cafetería ubicada en el corazón del centro de la ciudad. Fundada en 1995, Coffee Break comenzó como un pequeño negocio familiar que ofrecía café recién hecho y pasteles horneados en casa. Con el tiempo, la cafetería se ha expandido y ahora es un destino popular para aquellos que buscan un lugar tranquilo para disfrutar de una buena taza de café.
 
-                  La decoración de la cafetería es un reflejo de su ambiente acogedor y relajado. Los muebles son cómodos y están dispuestos de manera que los clientes puedan tener conversaciones tranquilas o trabajar en sus proyectos en un ambiente tranquilo. Las paredes están decoradas con arte local y fotografías históricas de la ciudad.
-                  
-                  El menú de Coffee Break cuenta con una amplia variedad de cafés, desde los clásicos lattes y cappuccinos hasta bebidas más innovadoras como el café con especias. También ofrecen una selección de tés, bebidas frías y una variedad de pasteles, galletas y bocadillos para satisfacer cualquier antojo.
-                  
-                  Además de ser un lugar para disfrutar de una buena taza de café, Coffee Break también se ha convertido en un lugar popular para reuniones de negocios informales, citas y encuentros entre amigos. La cafetería también organiza eventos regulares, como noches de música en vivo y catas de café para que los clientes puedan aprender más sobre el mundo del café.
-                  
-                  En resumen, Coffee Break es una cafetería con una rica historia y un ambiente relajado que ofrece una excelente selección de bebidas y alimentos para satisfacer cualquier antojo. Es un lugar perfecto para disfrutar de un descanso del ajetreo de la ciudad y relajarse con amigos o colegas.</p>
-            </section>
-            <section class="contact" id="contacto">
-              <h2 id="h2">Dejanos tu opinión</h2>
-              <form>
-                <input type="text" name="fullname" placeholder="Nombre Completo" />
-                <textarea placeholder="Mensaje" name="msj"></textarea>
-                <button>Enviar</button>
-              </form>
-            </section>
-    </main>
+    </div>
 
-    <footer>
-      <p>© 2023 Coffee Break</p>
-    </footer>
+  </div>
 
- 
-
-    <script src="backend/scripts/script.js"></script>
-    
-  </body>
+  <div class="foot"> &copy; 2023 Coffee Break. Todos los derechos reservados. </div>
+  
+  <script src="backend/scripts/script.js"></script>
+</body>
 </html>
