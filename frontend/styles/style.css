@@ -80,14 +80,14 @@ h2 {
 }
 
 .scroll-menu {
-  width: 95%;
+  width: min-content;
   height: 95%;
   box-sizing: border-box;
   overflow: auto;
 }
 
 .menu-item {
-  width: 30rem;
+  width: 22rem;
   height: 10rem;
   box-sizing: border-box;
   margin: 1rem auto;
@@ -238,7 +238,7 @@ h2 {
 }
 
 .scroll-product {
-  width: 25rem;
+  width: 22rem;
   height: 30rem;
   box-sizing: border-box;
   overflow: auto;
@@ -252,7 +252,7 @@ h2 {
 
 .informacion {
   width: 100%;
-  height: 50%;
+  height: 40%;
   background-color: #333;
   box-sizing: border-box;
   padding-top: 1rem;
@@ -270,75 +270,114 @@ h2 {
 
 .staff {
   width: 100%;
-  height: 50%;
+  height: 60%;
   background-color: #333;
   box-sizing: border-box;
 }
 
 .carousel {
+  width: 65%;
+  height: 80%;
+  box-sizing: border-box;
   display: flex;
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  width: 90%;
-  height: 90%;
-  margin: auto;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
 }
 
 .slide {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
-  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex !important;
   justify-content: center;
   align-items: center;
 }
 
-.staff-member {
-  border-radius: 0.5rem;
-  padding: 2.5rem;
-  display: flex;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-.staff-img {
-  margin: auto;
-  width: 10rem;
-  height: 8rem;
+.target {
+  width: 90%;
+  height: 90%;
   box-sizing: border-box;
-  background-color: rgb(128, 128, 128, 0.5);
+  background-color: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.staff-member img {
-  max-width: 50%;
-  margin-right: 20px;
+.staff-data {
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  padding: 1rem;
+  text-align: center;
 }
 
-.staff-member .info {
-  margin: auto;
-  width: 50%;
+.img-staff {
+  width: 100%;
+  height: 50%;
+  background-image: url(../../../backend/php/img_comprimida/productos/4bg.jpg);
+  box-sizing: border-box;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-.staff-member h3 {
-  margin-top: 0;
-  margin-bottom: 5px;
+.staff-name {
+  font-size: 1.5rem;
+  margin: 0.5rem 0 0;
 }
 
-.staff-member h4 {
-  margin-top: 0;
-  margin-bottom: 5px;
-  color: #666;
+.staff-nickname {
+  font-size: 1rem;
+  margin: 0;
+  color: #888;
 }
 
-.staff-member p {
-  margin-top: 0;
-  margin-bottom: 10px;
+.staff-description {
+  font-size: 0.875rem;
+  margin: 1rem 0;
+  color: #555;
+  line-height: 1.5;
 }
+
 
 .h3 {
   color: white;
   text-align: center;
   margin: 0%;
 }
+
+.slick-arrow {
+  position: absolute;
+  z-index: 1 !important;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  border: transparent;
+  background-color: rgb(255, 255, 255, 0.3);
+}
+
+.slick-arrow:hover {
+  background-color: white;
+}
+
+.slick-next {
+  margin-left: 13rem;
+}
+
+.slick-prev {
+  margin-right: 13rem;
+}
+
+.slick-dots li button:before {
+  font-size: 1.5rem;
+}
+
+/*FOOT */
 
 .foot {
   display: flex;

@@ -6,12 +6,7 @@ include ('backend/php/db.php');
 
 <script>
 
-window.addEventListener('hashchange', function() {
-  var popupContainer = document.querySelector('.popup-container');
-  var isTarget = location.hash.startsWith('#productos_categoria_');
 
-  document.body.style.overflow = isTarget ? 'hidden' : 'auto';
-});
 
 </script>
 
@@ -21,10 +16,12 @@ window.addEventListener('hashchange', function() {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="frontend/styles/slick.css">
+  <link rel="stylesheet" href="frontend/styles/slick-theme.css">
   <link rel="stylesheet" href="frontend/styles/style.css">
   <title>CofeeBreak</title>
 </head>
-<body class="aca">
+<body>
 
   <div class="head" id="header">
 
@@ -48,15 +45,15 @@ window.addEventListener('hashchange', function() {
 
   <div class="body">
 
-    <div class="menu" id="menu">
+    <div class="menu" id="back">
 
-      <h2>MENÚ</h2>
+      <h2 id="menu">MENÚ</h2>
 
       <div class="menu-container">
 
         <div class="scroll-menu">
 
-          <?php $categorias = "SELECT * FROM categorias"; $items = mysqli_query($conexion, $categorias);while ($rowc = mysqli_fetch_assoc ($items)) { ?>
+          <?php $categorias = "SELECT * FROM categorias"; $items = mysqli_query($conn, $categorias);while ($rowc = mysqli_fetch_assoc ($items)) { ?>
 
           <div class="menu-item" id="categoria_<?php echo $rowc ["id"]; ?>" style="background-image:url(../backend/php/img_comprimida/categorias/<?php echo $rowc ["id"]; ?>bg.jpg);">
 
@@ -68,11 +65,11 @@ window.addEventListener('hashchange', function() {
 
             <div class="popup">
 
-             <div class="cerrar"><a href="#menu">X</a></div>
+             <div class="cerrar"><a href="#back">X</a></div>
 
              <div class="scroll-product">
 
-             <?php $productos = "SELECT * FROM productos WHERE id_categoria = {$rowc['id']}"; $productos_items = mysqli_query($conexion, $productos); while ($rowp = mysqli_fetch_assoc($productos_items)) { ?>
+             <?php $productos = "SELECT * FROM productos WHERE id_categoria = {$rowc['id']}"; $productos_items = mysqli_query($conn, $productos); while ($rowp = mysqli_fetch_assoc($productos_items)) { ?>
 
               <div class="product-item" id="producto_<?php echo $rowp ["id"]; ?>">
 
@@ -139,35 +136,40 @@ window.addEventListener('hashchange', function() {
       </div>
 
       <div class="staff">
-
-      <h3 class="h3">Conoce a nuestro personal</h3>
-
+        <h3 class="h3">Conoce a nuestro personal</h3>
         <div class="carousel">
 
-          <div class="slide">
-            <div class="staff-member">
+        <?php 
+            $personal = "SELECT * FROM personal";
+            $items = mysqli_query($conn, $personal);
+            while ($rowpr = mysqli_fetch_assoc ($items)) {
+            ?>
 
-              <div class="staff-img" style="background-image: url();"></div>
+            <div class="slide">
+                <div class="target">
+                <div class="staff-data img-staff" style="background-image:url(../backend/php/img_comprimida/personal/<?php echo $rowpr ["id"]; ?>bg.jpg);"></div>
+                <div class="staff-data">
+                    <h3 class="staff-name"><?php echo $rowpr ["nombre"]; ?></h3>
+                    <h5 class="staff-nickname"><?php echo $rowpr ["apodo"]; ?></h5>
+                    <p class="staff-description"><?php echo $rowpr ["descripcion"]; ?></p>
+                </div>
+                </div>
+            </div>     
 
-              <div class="info">
-                <h3>Nombre del Trabajador</h3>
-                <h4>Apodo del Trabajador</h4>
-                <p>Pequeña descripción del trabajador.</p>
-              </div>
-              
-            </div>
-          </div>
+            <?php } ?>
 
         </div>
-
       </div>
 
     </div>
 
   </div>
 
-  <div class="foot"> &copy; 2023 Coffee Break. Todos los derechos reservados. </div>
-  
+  <div class="foot">&copy; 2023 Coffee Break</div>
+
+  <script src="backend/scripts/jquery-3.6.0.min.js"></script>
+  <script src="backend/scripts/slick.min.js"></script>
+  <script src="backend/scripts/slick.js"></script>
   <script src="backend/scripts/script.js"></script>
 </body>
 </html>
